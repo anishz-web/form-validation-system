@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Creative Registration Form</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      width: 320px;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      animation: fadeIn 0.5s ease;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .input-group {
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #667eea;
+    }
+
+    .error {
+      color: red;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #667eea;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #5563d8;
+    }
+
+    .success {
+      text-align: center;
+      color: green;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+      from {opacity:0; transform: translateY(20px);}
+      to {opacity:1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Register</h2>
+
+    <form id="registerForm">
+
+      <div class="input-group">
+        <input type="text" id="name" placeholder="Full Name">
+        <div class="error" id="nameError"></div>
+      </div>
+
+      <div class="input-group">
+        <input type="text" id="email" placeholder="Email">
+        <div class="error" id="emailError"></div>
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Password">
+        <div class="error" id="passError"></div>
+      </div>
+
+      <button type="submit">Create Account</button>
+
+      <div class="success" id="successMsg"></div>
+
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("registerForm");
+
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const passInput = document.getElementById("password");
+
+    const nameError = document.getElementById("nameError");
+    const emailError = document.getElementById("emailError");
+    const passError = document.getElementById("passError");
+    const successMsg = document.getElementById("successMsg");
+
+    form.addEventListener("submit", function(e) {
+
+      e.preventDefault(); // 🔥 prevent page reload
+
+      let isValid = true;
+
+      // clear messages
+      nameError.textContent = "";
+      emailError.textContent = "";
+      passError.textContent = "";
+      successMsg.textContent = "";
+
+      // Name validation
+      if (nameInput.value.trim().length < 3) {
+        nameError.textContent = "Name must be at least 3 characters";
+        isValid = false;
+      }
+
+      // Email validation
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!emailPattern.test(emailInput.value)) {
+        emailError.textContent = "Enter valid email";
+        isValid = false;
+      }
+
+      // Password validation
+      const passPattern = /^(?=.*[A-Z])(?=.*[0-9]).{6,}$/;
+      if (!passPattern.test(passInput.value)) {
+        passError.textContent =
+          "Password must contain 6+ chars, 1 capital, 1 number";
+        isValid = false;
+      }
+
+      // Success
+      if (isValid) {
+        successMsg.textContent = "Registration Successful 🎉";
+        form.reset();
+      }
+
+    });
+  </script>
+
+</body>
+</html>
